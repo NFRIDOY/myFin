@@ -6,7 +6,11 @@ import ListBox from '../ListBox/ListBox';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 // eslint-disable-next-line react/prop-types
-export default function Modal({ isOpen, setIsOpen, title, type, setTotal, children }) {
+export default function Modal({ isOpen, setIsOpen, title, type, setTotal, children,
+    register,
+    handleSubmit,
+    onSubmit,
+}) {
 
     function closeModal() {
         setIsOpen(false)
@@ -67,25 +71,26 @@ export default function Modal({ isOpen, setIsOpen, title, type, setTotal, childr
                                         </p>
                                     </div> */}
                                     {/* {children} */}
-                                    <form className='flex flex-col gap-y-4 mt-6'>
-                                        <input type="text" name="" id="" className="input input-sm w-full input-bordered input-success  " placeholder='Amount' />
-                                        <select className='input input-sm w-full input-bordered input-success   '>
+                                    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-4 mt-6'>
+                                        <input {...register("amount", { required: true })} type="number"  className="input input-sm w-full input-bordered input-success  " placeholder='Amount' />
+                                        <select {...register("type")} className='input input-sm w-full input-bordered input-success   '>
                                             {type.map(type => (
                                                 <option key={type} value={type}>{type} </option>
                                             ))}
                                         </select>
                                         {/* <ListBox></ListBox> */}
+                                        <div className="mt-4">
+                                            <button
+                                                type="submit"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={closeModal}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
                                     </form>
 
-                                    <div className="mt-4">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
+
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

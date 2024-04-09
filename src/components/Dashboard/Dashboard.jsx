@@ -1,12 +1,23 @@
 import { useState } from "react"
 import Statistics from "../Statistics/Statistics"
 import Modal from "../Modal/Modal"
-import ListBox from "../ListBox/ListBox"
+// import ListBox from "../ListBox/ListBox"
+import { useForm } from "react-hook-form";
 
 
 export default function Dashboard() {
+
   const [incomeTotal, setIncomeTotal] = useState(0)
   const [expenceTotal, setExpenceTotal] = useState(0)
+
+  // Handle form submission
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    // TODO: handle The data with using modal income / expense
+    console.log(data);
+  };
+
 
   // Modal 
 
@@ -51,6 +62,9 @@ export default function Dashboard() {
             title="Income"
             type={incomeType}
             setTotal={setIncomeTotal}
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
           >
 
           </Modal>
@@ -60,6 +74,9 @@ export default function Dashboard() {
             title="Expense"
             type={expenseType}
             setTotal={setExpenceTotal}
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
           >
 
           </Modal>
