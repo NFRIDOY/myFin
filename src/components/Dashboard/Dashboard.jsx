@@ -1,31 +1,78 @@
 import { useState } from "react"
 import Statistics from "../Statistics/Statistics"
+import Modal from "../Modal/Modal"
+import ListBox from "../ListBox/ListBox"
 
 
 export default function Dashboard() {
-  const [income, setIncome] = useState(0)
-  const [expence, setExpence] = useState(0)
+  const [incomeTotal, setIncomeTotal] = useState(0)
+  const [expenceTotal, setExpenceTotal] = useState(0)
+
+  // Modal 
+
+  let [isOpenModalIncome, setIsOpenModalIncome] = useState(false)
+  let [isOpenModalExpense, setIsOpenModalExpense] = useState(false)
+
+  // function closeModal() {
+  //   setIsOpen(false)
+  // }
+
+  function openModalIncome() {
+    setIsOpenModalIncome(true)
+  }
+  function openModalExpense() {
+    setIsOpenModalExpense(true)
+  }
+
+
+  const data = [
+    { name: 'Group A', value: 2000 },
+    { name: 'Group B', value: 4567 },
+  ];
+
+  const incomeType = ["Salary", "Bonus"]
+  const expenseType = ["Groceries", "Food", "Clothing"]
+
   return (
     <div className='max-h-screen *:border-2 grid lg:grid-cols-5'>
       <div className='lg:col-span-2'>
         <div className="space-x-12 flex justify-center ">
-          <button className="btn btn-success text-white flex flex-col" onClick={()=> setIncome(prev=> prev+1)}>
+          <button className="btn btn-success text-white flex flex-col" onClick={openModalIncome}>
             <h1>Income</h1>
-            <h2>{income}</h2>
+            <h2>{incomeTotal}</h2>
           </button>
-          <button className="btn btn-error text-white flex flex-col" onClick={()=> setExpence(prev=> prev+1)}>
+          <button className="btn btn-error text-white flex flex-col" onClick={openModalExpense}>
             <h1>Expence</h1>
-            <h2>{expence}</h2>
+            <h2>{expenceTotal}</h2>
           </button>
+          <Modal
+            isOpen={isOpenModalIncome}
+            setIsOpen={setIsOpenModalIncome}
+            title="Income"
+            type={incomeType}
+            setTotal={setIncomeTotal}
+          >
+
+          </Modal>
+          <Modal
+            isOpen={isOpenModalExpense}
+            setIsOpen={setIsOpenModalExpense}
+            title="Expense"
+            type={expenseType}
+            setTotal={setExpenceTotal}
+          >
+
+          </Modal>
         </div>
         <div className="lg:mt-10">
           <h1>
             Transections
+            {/* <ListBox ></ListBox> */}
           </h1>
         </div>
       </div>
       <div className='lg:col-span-3 min-h-[calc(100vh-150px)]'>
-        <Statistics />
+        <Statistics data={data} />
       </div>
     </div>
   )
